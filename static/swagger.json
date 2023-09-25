@@ -1,0 +1,81 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Steam Reviews Fetcher API",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/": {
+        "get": {
+          "description": "Returns message showing app is up",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Hi! This is a steam PUBG Game reviews fetcher"
+            }
+          }
+        }
+      },
+      "/reviews": {
+        "get": {
+          "description": "List the reviews of the steam PUBG Game",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "filter",
+              "in": "query",
+              "description": "To sort by creation/updated time, all(default) sorted by helpfullness\n Allowed values: all, recent, updated",
+              "schema": {
+                "type": "string",
+                "enum": ["all", "recent", "updated"]
+              }
+            },
+            {
+                "name": "review_type",
+                "in": "query",
+                "description": "To filter based on the type of reviews, positive/negative reviews\nAllowed values: all(default), positive, negative",
+                "schema": {
+                  "type": "string",
+                  "enum": ["all", "positive", "negative"]
+                }
+            },
+            {
+                "name": "purchase_type",
+                "in": "query",
+                "description": "To filter whether the user purchased the game on steam\n Allowed values: all, non_steam_purchase, steam(default)",
+                "schema": {
+                  "type": "string",
+                  "enum": ["all", "non_steam_purchase", "steam"]
+                }
+            },
+            {
+                "name": "num_per_page",
+                "in": "query",
+                "description": "By default, up to 20 reviews will be returned. \nMore reviews can be returned based on this parameter (with a maximum of 100 reviews)",
+                "schema": {
+                  "type": "string"
+                }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully fetched the reviews. Also, you can find next_cursor(need to be passed in the query params 'cursor' field) value to paginate the next reviews."
+            },
+            "400": {
+                "description": "Failed to fetch reviews."
+              },
+            "500": {
+              "description": "Error while processing the request"
+            }
+          }
+        }
+      }
+    }
+  }
